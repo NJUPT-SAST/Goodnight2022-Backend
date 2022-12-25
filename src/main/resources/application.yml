@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: GoodNight2022
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.sast.goodnight2022backend.entity
+
+logging:
+  level:
+    com.sast.goodnight2022backend.mapper: debug

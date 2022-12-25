@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>晚安2022 点赞消息</title>
+  <meta charset="utf-8">
+</head>
+<div>
+  <table style="font-family: Segoe UI, SegoeUIWF, Arial, sans-serif; font-size: 12px; color: #333333; border-spacing: 0; border-collapse: collapse; padding: 0; width: 580px; direction: ltr">
+    <tbody>
+    <tr>
+      <td style="padding: 30px 20px; border-bottom-style: solid; border-bottom-color: #0078D4; border-bottom-width: 4px">
+        <table style="font-family: Segoe UI, SegoeUIWF, Arial, sans-serif; font-size: 12px; color: #333333; border-spacing: 0; border-collapse: collapse; width: 100%">
+          <tbody>
+          <tr>
+            <td style="font-size: 30px; padding: 0 0 5px 0"
+                th:text="${username}+' 您好：'">
+              用户 您好：
+            </td>
+          </tr>
+          <tr>
+            <td style="font-size: 18px; padding: 0 0 5px 0">
+              您发送的祝福消息在24小时的时间内收获了
+            </td>
+          </tr>
+          <tr>
+            <td style="font-size: 25px; padding: 0 0 5px 0">
+              <span th:text="${count}">
+                0
+              </span>
+              <span style="font-size: 18px">
+                个点赞！
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td style="font-size: 18px; padding: 0 0 5px 0">
+              大家都很喜欢你的祝福呢！
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 10px 0 5px 0; color: #B2B2B2; font-size: 15px">
+        <a href="http://localhost/" th:href="${website}+'/'" style="color: #0044CC">晚安2022</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

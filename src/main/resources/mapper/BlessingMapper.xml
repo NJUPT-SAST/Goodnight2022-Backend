@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sast.goodnight2022backend.mapper.BlessingMapper">
+
+    <select id="getRandBlessing" resultType="com.sast.goodnight2022backend.entity.Blessing">
+        SELECT * FROM blessing AS t1
+        JOIN (
+            SELECT ROUND(RAND()*(SELECT MAX(id)
+            FROM blessing)) AS id
+        ) AS t2
+        WHERE t1.id >= t2.id
+        ORDER BY t1.id
+        LIMIT 1;
+    </select>
+</mapper>
