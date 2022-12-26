@@ -53,4 +53,8 @@ public class Blessing {
      */
     @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
+    /**
+     * 状态
+     */
+    private Integer status;
 }

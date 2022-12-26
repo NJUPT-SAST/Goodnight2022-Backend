@@ -3,6 +3,7 @@ package com.sast.goodnight2022backend.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sast.goodnight2022backend.entity.Blessing;
 import com.sast.goodnight2022backend.entity.Like;
+import com.sast.goodnight2022backend.enums.BlessingStatusEnum;
 import com.sast.goodnight2022backend.enums.ErrorEnum;
 import com.sast.goodnight2022backend.exception.LocalException;
 import com.sast.goodnight2022backend.mapper.BlessingMapper;
@@ -77,9 +78,11 @@ public class BlessingService {
                 .eq(Blessing::getUid, blessing.getUid()));
         if (blessingDB == null) {
             blessing.setId(null);
+            blessing.setStatus(null);
             blessingMapper.insert(blessing);
         } else {
             blessing.setId(blessingDB.getId());
+            blessing.setStatus(blessingDB.getStatus());
             blessingMapper.updateById(blessing);
         }
     }
@@ -128,7 +131,12 @@ public class BlessingService {
 
         val randBlessing = blessingMapper.getRandBlessing();
         if (randBlessing == null) {
-            throw new LocalException(ErrorEnum.NO_BLESSING);
+            val blessingCounts = blessingMapper.selectCount(new LambdaQueryWrapper<Blessing>()
+                    .eq(Blessing::getStatus, BlessingStatusEnum.COMMON.getStatus()));
+            if (blessingCounts == 0)
+                throw new LocalException(ErrorEnum.NO_BLESSING);
+            else
+                return getRandBlessing(uid);
         }
 
         val count = likeMapper.selectCount(new LambdaQueryWrapper<Like>()
