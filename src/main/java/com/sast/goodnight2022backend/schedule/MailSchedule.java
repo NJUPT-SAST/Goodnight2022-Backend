@@ -22,14 +22,16 @@ public class MailSchedule {
     }
 
     /**
-     * 每10分钟检查一次是否需要发送邮件
+     * 每15分钟检查一次是否需要发送邮件
      */
-    @Scheduled(fixedDelay = 10*60*1000)
+    @Scheduled(fixedDelay = 15*60*1000)
     public void sendLikeCountsMailSchedule() {
+        log.info("-------- Start To Send Mail --------");
         try {
             mailService.sendLikeCountsMail();
         } catch (MessagingException e) {
             log.error("发送邮件时发生错误：", e);
         }
+        log.info("----------------- End -----------------");
     }
 }

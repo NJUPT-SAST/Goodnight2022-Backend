@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import javax.annotation.Resource;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -47,7 +46,7 @@ public class MailService {
         this.blessingService = blessingService;
     }
 
-    @Resource
+    @Autowired
     public void setJavaMailSender(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
@@ -70,8 +69,7 @@ public class MailService {
         int index = 0;
         val caches = redisService.getCachedLikeCounts();
         for (LikeCountCache cache : caches) {
-            index++;
-            if (index > 3)
+            if (index >= 3)
                 return;
 
             val duration  = Duration.between(cache.getDate(), LocalDateTime.now());
@@ -87,14 +85,15 @@ public class MailService {
 
                 MimeMessage mimeMessage = javaMailSender.createMimeMessage();
                 MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true);
-                message.setFrom("晚安2022<" + configService.getMailUserName() + ">");
+                message.setFrom("SAST<" + configService.getMailUserName() + ">");
                 message.setTo(blessing.getMail());
                 message.setSubject("[晚安2022]点赞通知");
                 message.setText(mailContent, true);
                 javaMailSender.send(mimeMessage);
 
-                redisService.deleteLikeCountsCache(bid);
                 log.info("已发送 {} 的点赞提醒", CommonUtil.cutString(blessing.getUid()));
+                redisService.deleteLikeCountsCache(bid);
+                index++;
             }
         }
     }
